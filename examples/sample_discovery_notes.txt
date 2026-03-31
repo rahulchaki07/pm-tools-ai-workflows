@@ -1,0 +1,59 @@
+Project: Contract Intelligence - Search Experience Refresh
+Quarter: Q3 planning input
+Prepared by: Product (Discovery sprint 2)
+
+Business context:
+- Product serves legal ops teams managing 5k to 60k active agreements.
+- Search is one of the top three workflows by weekly active usage.
+- In the last two quarters, search-related complaints increased as account size grew.
+- Revenue team flagged search quality as a recurring blocker in enterprise evaluations.
+
+Evidence collected this cycle:
+1) Customer interviews (n=11)
+- 6 Legal Ops Managers (mid-market to enterprise)
+- 3 In-house Counsel
+- 2 Procurement Managers
+- 8/11 participants reported "low confidence" in current search relevance.
+- 7/11 users said they manually open multiple contracts because top results are noisy.
+- Time to locate a specific clause ranged from 3 to 18 minutes depending on metadata quality.
+
+2) Support and success data (last 60 days)
+- 47 tickets tagged "search relevance" or "cannot find clause".
+- 19 tickets required CSM intervention to locate content that users expected to self-serve.
+- Top complaint themes:
+  - exact phrase search misses obvious results
+  - no way to filter by effective date and counterparty in one step
+  - results page does not show enough snippet context
+
+3) Sales and solutions feedback
+- 4 enterprise deals in late stage asked for "Google-like clause search".
+- 2 opportunities listed search quality as "at risk" in MEDDPICC notes.
+- Demo teams currently prepare curated saved views to hide search limitations.
+
+4) Product and technical constraints
+- Current implementation indexes title, tags, and limited metadata only.
+- Clause body text is stored but not indexed for retrieval.
+- Role-based permissions are enforced in API responses, not in index layer.
+- Engineering estimate:
+  - 1 sprint: full-text indexing + baseline ranking
+  - +1 sprint: filter chips, result snippets, ranking tuning
+  - +1 sprint: permission-safe index strategy and telemetry hardening
+
+5) UX research notes
+- Users start with broad terms, then refine quickly by:
+  - contract type
+  - jurisdiction
+  - counterparty
+  - effective date / renewal window
+- Trust increases when result snippets show the exact matching phrase in context.
+- Users prefer "good enough in <2 seconds" for exploration, but want high precision for final answer workflows.
+
+Hypotheses to validate:
+- H1: Clause-body indexing + contextual snippets will reduce time-to-answer by at least 30%.
+- H2: Multi-filter refinement will reduce irrelevant result clicks by at least 25%.
+- H3: Search confidence is a leading indicator for expansion in legal-heavy enterprise accounts.
+
+Open concerns:
+- Potential indexing cost increase with clause-body ingestion.
+- Permission leakage risk if access controls are not consistently applied in indexing pipeline.
+- Need to define a clear relevance quality metric before rollout.

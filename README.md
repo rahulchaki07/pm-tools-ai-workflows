@@ -1,87 +1,134 @@
 # pm-tools-ai-workflows
 
-**AI tools I use in my PM workflow — shared openly as working examples**
+[![CI](https://github.com/rahulchaki/pm-tools-ai-workflows/actions/workflows/ci.yml/badge.svg)](https://github.com/rahulchaki/pm-tools-ai-workflows/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> Not a tutorial repo. These are tools I've built for myself that turned out to be useful to share. Each one solves a real workflow problem I had.
+AI-assisted PM workflows I use in real product work, packaged as local scripts.
 
----
-
-## The problem these solve
-
-AI tools for PMs tend to be either:
-1. Generic prompts in a doc that anyone could write, or
-2. Heavy SaaS platforms with a 14-day free trial
-
-I wanted something in the middle: working tools that do specific, valuable PM tasks, that I can adapt and run locally when I need them.
+This repo is designed to be practical and easy to inspect:
+- clear prompts
+- simple command-line tools
+- realistic examples
+- structured outputs you can edit into real product docs
 
 ---
 
-## Tools
+## What this project is (in plain English)
 
-### `prd_generator.py` — Structured PRD from discovery notes
+This project gives Product Managers four practical AI helpers:
+1. turn messy discovery notes into a PRD draft
+2. create a competitor analysis draft
+3. improve weak user stories
+4. summarize many interview notes into themes
 
-Takes raw discovery notes (interview transcripts, user feedback, stakeholder requests) and produces a structured PRD skeleton with:
-- Problem statement (synthesised from inputs)
-- User segments and jobs-to-be-done
-- Success metrics suggestions
-- Scope and out-of-scope recommendations
-- Open questions flagged for follow-up
-
-**When I use this:** At the start of a new feature — takes 20 minutes of synthesis work and turns it into a structured starting point in ~30 seconds. I always edit the output heavily, but the skeleton saves time.
-
-### `competitive_analysis.py` — Structured competitor teardown
-
-Takes a product name and target category, searches for public information, and produces a structured analysis:
-- Feature comparison matrix
-- Positioning differences
-- Pricing and packaging patterns
-- Strategic gaps and opportunities
-
-**When I use this:** For a quick read on a competitor before a sales call or investor meeting.
-
-### `user_story_refiner.py` — Story quality checker
-
-Takes a raw user story and checks it against a rubric:
-- Is the user clearly defined?
-- Is the job-to-be-done specific enough?
-- Are acceptance criteria testable?
-- Is the scope achievable in a sprint?
-
-Returns the original story, a quality score, specific issues, and a rewritten version.
-
-**When I use this:** Before sprint planning when I'm reviewing the backlog and stories feel vague.
-
-### `interview_synthesiser.py` — Discovery interview analyser
-
-Takes raw interview notes from multiple sessions and extracts:
-- Themes across interviews
-- Contradictions or tensions between user perspectives
-- Jobs-to-be-done frequency ranking
-- Direct quotes organised by theme
-
-**When I use this:** After a round of discovery interviews before synthesising into a problem brief.
+You run everything locally from your terminal.  
+No fancy UI, no lock-in, full prompt visibility.
 
 ---
 
-## File structure
+## Start in 3 steps
 
+```bash
+# 1) Install dependencies
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2) Add your API key
+echo "ANTHROPIC_API_KEY=your_key_here" > .env
+
+# 3) Run one tool
+python prd_generator.py \
+  --input examples/sample_discovery_notes.txt \
+  --output outputs/prd.md
 ```
+
+Then compare your output with: `examples/sample_prd_output.md`
+
+---
+
+## Tools (what each one does)
+
+### `prd_generator.py`
+Creates a PRD skeleton from raw discovery notes.
+
+**Good for:** starting feature planning quickly.
+
+### `competitive_analysis.py`
+Creates a competitor teardown from a product name and category.
+
+**Good for:** sales prep, strategy discussions, investor prep.
+
+### `user_story_refiner.py`
+Scores and rewrites a weak user story.
+
+**Good for:** sprint planning and backlog quality.
+
+### `interview_synthesiser.py`
+Summarizes many interview files into themes and insights.
+
+**Good for:** discovery synthesis and problem framing.
+
+---
+
+## Project map (easy file guide)
+
+If you are new, read this first: `FILE_GUIDE.md`
+
+| File/Folder | What it means |
+|---|---|
+| `README.md` | Main guide: what this repo does and how to run it |
+| `FILE_GUIDE.md` | Plain-English explanation of every important file |
+| `config.py` | Shared setup used by all tools (API key, prompt loading, model call) |
+| `prd_generator.py` | PRD draft tool |
+| `competitive_analysis.py` | Competitor analysis tool |
+| `user_story_refiner.py` | User story quality/refinement tool |
+| `interview_synthesiser.py` | Interview synthesis tool |
+| `prompts/` | Detailed system prompts used by each tool |
+| `examples/` | Sample input and portfolio-quality sample outputs |
+| `tests/` | Basic tests that verify core behavior |
+| `.github/workflows/ci.yml` | GitHub Action that runs tests automatically |
+| `requirements.txt` | Python dependencies |
+| `Makefile` | Shortcut commands (`make test`, `make demo-prd`, etc.) |
+| `LICENSE` | Open-source license |
+
+---
+
+## Folder structure
+
+```text
 pm-tools-ai-workflows/
 ├── README.md
-├── prd_generator.py          
-├── competitive_analysis.py   
-├── user_story_refiner.py     
-├── interview_synthesiser.py  
+├── FILE_GUIDE.md
+├── LICENSE
+├── Makefile
+├── requirements.txt
+├── .gitignore
+├── config.py
+├── prd_generator.py
+├── competitive_analysis.py
+├── user_story_refiner.py
+├── interview_synthesiser.py
 ├── prompts/
-│   ├── prd_system.txt        # System context for PRD generation
+│   ├── prd_system.txt
 │   ├── competitive_system.txt
 │   ├── story_system.txt
 │   └── interview_system.txt
 ├── examples/
-│   ├── sample_discovery_notes.txt     # Anonymised sample input
-│   ├── sample_prd_output.md           # Example PRD skeleton output
-│   └── sample_interview_synthesis.md  # Example synthesis output
-└── config.py                 # Model and prompt configuration
+│   ├── README.md
+│   ├── sample_discovery_notes.txt
+│   ├── sample_prd_output.md
+│   ├── sample_interview_synthesis.md
+│   ├── sample_competitive_analysis_output.md
+│   └── sample_story_refinement_output.md
+├── screenshots/
+│   └── README.md
+├── tests/
+│   └── test_core.py
+└── .github/
+    └── workflows/
+        └── ci.yml
 ```
 
 ---
@@ -89,47 +136,112 @@ pm-tools-ai-workflows/
 ## Setup
 
 ```bash
-pip install anthropic python-dotenv
-
-# Create .env file
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 echo "ANTHROPIC_API_KEY=your_key_here" > .env
+```
+
+Quick setup via Make:
+
+```bash
+make setup
 ```
 
 ---
 
 ## Usage
 
+All tools support:
+- `--output` to write markdown to file
+- `--model` to override model (optional)
+- `--max-tokens` to control output length (optional)
+
 ```bash
-# Generate PRD skeleton from discovery notes
-python prd_generator.py --input examples/sample_discovery_notes.txt
+# Generate PRD skeleton
+python prd_generator.py \
+  --input examples/sample_discovery_notes.txt \
+  --output outputs/prd.md
 
-# Analyse competitor
-python competitive_analysis.py --product "Icertis" --category "CLM"
+# Competitive analysis
+python competitive_analysis.py \
+  --product "Icertis" \
+  --category "CLM" \
+  --output outputs/competitive.md
 
-# Check user story quality
-python user_story_refiner.py --story "As a user I want to see contracts"
+# User story refinement
+python user_story_refiner.py \
+  --story "As a user I want to see contracts" \
+  --output outputs/story.md
 
-# Synthesise interviews
-python interview_synthesiser.py --input-dir ./interview_notes/
+# Interview synthesis
+python interview_synthesiser.py \
+  --input-dir ./interview_notes/ \
+  --output outputs/interview_synthesis.md
+```
+
+Makefile shortcuts:
+
+```bash
+make demo-prd
+make demo-competitive
+make demo-story
+make demo-interview
 ```
 
 ---
 
-## Design decisions worth noting
+## Examples
 
-**Why local scripts, not a SaaS tool?**
-I want control over what data I'm sending to which model. Discovery interview notes and PRD content contain sensitive strategic information. Running locally means I control the data.
+See `examples/README.md` for a guided walkthrough and expected outputs.
 
-**Why Claude API and not ChatGPT?**
-I've tested both. For structured extraction and synthesis tasks (the core of what these tools do), the instruction-following quality is meaningfully better. For creative writing tasks the gap is smaller.
-
-**Why no fancy UI?**
-Because the 30-second effort to run a terminal script is fine when the output is valuable. UI complexity would distract from the actual output. If a tool is worth having a UI, it's worth productising properly — otherwise terminal is fine.
+Portfolio-ready artifacts included:
+- `examples/sample_prd_output.md`
+- `examples/sample_interview_synthesis.md`
+- `examples/sample_competitive_analysis_output.md`
+- `examples/sample_story_refinement_output.md`
 
 ---
 
-## A note on AI tools for PMs
+## Screenshots for portfolio
 
-These tools are force multipliers, not replacements. The PRD generator doesn't write PRDs — I do. It helps me not stare at a blank page. The interview synthesiser doesn't do discovery analysis — I do. It helps me see patterns I might miss when I'm reading 8 transcripts in a row.
+- Add visual proof in `screenshots/` (see `screenshots/README.md` for suggested files).
+- Include at least one terminal run screenshot and one output screenshot per tool.
+- Keep screenshots anonymized and consistent in style.
 
-The skill is knowing what to prompt, how to evaluate the output, and what to change. That's still a human skill.
+---
+
+## Quality and reliability
+
+- Prompt templates are detailed and structured for consistency.
+- API calls use simple retry backoff for transient failures.
+- Unit tests cover core behavior and input handling.
+- GitHub Actions CI runs tests on push/PR.
+
+Run tests locally:
+
+```bash
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+---
+
+## Limitations
+
+- These are drafting and synthesis aids, not final artifacts.
+- Output quality depends on input quality and coverage.
+- Competitive analysis should be validated with primary research before major decisions.
+- Human PM judgment is always required before shipping decisions.
+
+---
+
+## Who this is for
+
+- PMs who want practical AI workflows, not generic prompts
+- founders and operators who need structured drafts quickly
+- learners building PM + AI portfolio projects
+
+If you are evaluating this repo on GitHub, start with:
+1. `README.md`
+2. `FILE_GUIDE.md`
+3. `examples/README.md`
